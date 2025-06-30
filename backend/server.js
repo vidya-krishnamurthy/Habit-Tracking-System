@@ -7,6 +7,9 @@ const cors = require("cors");
 const bcrypt = require("bcryptjs");
 
 // Load .env variables
+// server.js
+const morgan = require("morgan");
+
 dotenv.config();
 
 const signupmodel = require("./signup");
@@ -17,6 +20,7 @@ const PendingHabit = require("./pendingHabitModel");
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(morgan("dev")); // Logs all HTTP requests
 
 // ✅ Use MONGO_URI from .env
 
@@ -62,6 +66,7 @@ app.post("/login", async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ success: false, message: "Invalid credentials" });
 
+    console.log("User data sent to client:", { id: user._id, name: user.username, email: user.email }); // Debug
     res.status(200).json({ 
       success: true, 
       message: "Login successful", 
@@ -216,5 +221,13 @@ app.post("/habit/reset", async (req, res) => {
     res.status(500).json({ message: "Error resetting habits" });
   }
 });
+
+// server.js
+const corsOptions = {
+  origin: ["http://localhost:3000", "https://habit-tracking-system-kohl.vercel.app/"], // Replace with your frontend URL
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+};
+app.use(cors(corsOptions));
 
 app.listen(port, () => console.log(`🚀 Server running on port ${port}`));
