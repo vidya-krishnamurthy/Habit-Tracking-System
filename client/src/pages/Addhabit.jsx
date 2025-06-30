@@ -20,19 +20,18 @@ const AddHabit = () => {
   };
 
   const handleSave = async () => {
-    if (!habit.name.trim()) return;
+  if (!habit.name.trim()) return;
 
-    try {
-      // Get the logged-in user's data and add the userId to the habit object.
-      const userData = JSON.parse(localStorage.getItem("user"));
-      const habitWithUser = { ...habit, userId: userData.id };
-
-      await axios.post("https://habit-tracking-system-proj.onrender.com/add-habit", habitWithUser);
-      navigate('/tracking');
-    } catch (error) {
-      console.error("Error saving habit:", error);
-    }
-  };
+  try {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    const habitWithUser = { ...habit, userId: userData.id };
+    console.log("Sending habit data:", habitWithUser); // Add this to debug
+    await axios.post("https://habit-tracking-system-kohl.vercel.app/add-habit", habitWithUser);
+    navigate('/tracking');
+  } catch (error) {
+    console.error("Error saving habit:", error.response?.data || error.message);
+  }
+};
 
   return (
     <div className="habit-form-container">

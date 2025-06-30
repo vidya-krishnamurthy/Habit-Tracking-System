@@ -17,13 +17,12 @@ const Analysis = () => {
         // Retrieve the logged-in user's id from localStorage
         const userData = JSON.parse(localStorage.getItem("user"));
         const userId = userData ? userData.id : "";
-
         // Fetch completed and pending habits for the specific user
         const completedRes = await axios.get(
-          `https://habit-tracking-system-proj.onrender.com/habits/completed?userId=${userId}`
+          `https://habit-tracking-system-kohl.vercel.app/habits/completed?userId=${userId}`
         );
         const pendingRes = await axios.get(
-          `https://habit-tracking-system-proj.onrender.com/habits/pending?userId=${userId}`
+          `https://habit-tracking-system-kohl.vercel.app/habits/pending?userId=${userId}`
         );
 
         // Calculate the distribution for each status

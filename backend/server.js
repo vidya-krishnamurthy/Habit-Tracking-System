@@ -27,8 +27,10 @@ console.log("Connecting to MongoDB URI:", process.env.MONGO_URI);
 mongoose
   .connect(mongourl, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("✅ Connected to MongoDB"))
-  .catch((error) => console.error("❌ Database connection error:", error));
-
+  .catch((error) => {
+    console.error("❌ Database connection error:", error.message, error.stack);
+    process.exit(1); // Exit the process if the database connection fails
+  });
 // -------------------------
 // USER AUTHENTICATION ROUTES
 // -------------------------
@@ -78,14 +80,14 @@ app.post("/login", async (req, res) => {
 // Add New Habit
 app.post("/add-habit", async (req, res) => {
   try {
-    console.log("📥 Habit Data Received:", req.body);  // ✅ LOG
+    console.log("📥 Habit Data Received:", req.body);
     const habit = new Habit(req.body);
     const saved = await habit.save();
-    console.log("✅ Saved Habit:", saved);  // ✅ LOG
+    console.log("✅ Saved Habit:", saved);
     res.status(201).json({ message: "Habit added successfully", habit: saved });
   } catch (error) {
-    console.error("❌ Error adding habit:", error);  // ✅ FULL ERROR LOG
-    res.status(500).json({ message: "Error saving habit" });
+    console.error("❌ Error adding habit:", error.message, error.stack);
+    res.status(500).json({ message: "Error saving habit", error: error.message });
   }
 });
 

@@ -14,7 +14,7 @@ const Tracking = () => {
       try {
         // Get user id from localStorage
         const userData = JSON.parse(localStorage.getItem("user"));
-        const response = await axios.get(`https://habit-tracking-system-proj.onrender.com/habits?userId=${userData.id}`);
+        const response = await axios.get(`https://habit-tracking-system-kohl.vercel.app/habits?userId=${userData.id}`);
         setHabits(response.data);
       } catch (error) {
         console.error("Error fetching habits:", error);
