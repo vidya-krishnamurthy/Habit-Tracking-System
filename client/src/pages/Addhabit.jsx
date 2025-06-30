@@ -26,7 +26,7 @@ const AddHabit = () => {
     const userData = JSON.parse(localStorage.getItem("user"));
     const habitWithUser = { ...habit, userId: userData.id };
     console.log("Sending habit data:", habitWithUser); // Add this to debug
-    await axios.post("https://habit-tracking-system-kohl.vercel.app/add-habit", habitWithUser);
+    await axios.post("https://habit-tracking-system-g7z4.onrender.com/add-habit", habitWithUser);
     navigate('/tracking');
   } catch (error) {
     console.error("Error saving habit:", error.response?.data || error.message);

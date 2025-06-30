@@ -19,10 +19,10 @@ const Analysis = () => {
         const userId = userData ? userData.id : "";
         // Fetch completed and pending habits for the specific user
         const completedRes = await axios.get(
-          `https://habit-tracking-system-kohl.vercel.app/habits/completed?userId=${userId}`
+          `https://habit-tracking-system-g7z4.onrender.com/habits/completed?userId=${userId}`
         );
         const pendingRes = await axios.get(
-          `https://habit-tracking-system-kohl.vercel.app/habits/pending?userId=${userId}`
+          `https://habit-tracking-system-g7z4.onrender.com/habits/pending?userId=${userId}`
         );
 
         // Calculate the distribution for each status
